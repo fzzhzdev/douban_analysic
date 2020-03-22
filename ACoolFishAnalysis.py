@@ -132,7 +132,7 @@ class ACoolFishAnalysis:
 
         # 初始化 WordCloud
         #MAC: /System/Library/fonts/PingFang.ttc  windows:C:/Windows/Fonts/STFANGSO.ttf
-        wc = WordCloud(width=800, height=800, background_color='#FFF', mask=bg_image, font_path='/System/Library/fonts/PingFang.ttc', stopwords=stopwords, max_font_size=400, random_state=1)
+        wc = WordCloud(width=800, height=800, background_color='#FFF', mask=bg_image, font_path='/System/Library/fonts/PingFang.ttc', stopwords=stopwords, max_font_size=400, random_state=10)
         # 生成，显示图片
         wc.generate_from_text(words)
 
@@ -142,6 +142,7 @@ class ACoolFishAnalysis:
         wc.recolor(color_func=img_colors)
         plt.imshow(wc)
         plt.axis('off')
+        plt.savefig("files/filename.png")
         plt.show()
 
     def geo_show(self) -> Geo:
@@ -183,7 +184,7 @@ class ACoolFishAnalysis:
             )
                 .set_series_opts(label_opts=opts.LabelOpts(is_show=False))
                 .set_global_opts(
-                visualmap_opts=opts.VisualMapOpts(max_ = 5),
+                visualmap_opts=opts.VisualMapOpts(max_ = 30),
                 title_opts=opts.TitleOpts(title="Geo-HeatMap"),
             )
                 .render('files/热点分布图.html')

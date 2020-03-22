@@ -5,7 +5,7 @@ from pyecharts.globals import ChartType
 from wordcloud import STOPWORDS, WordCloud, ImageColorGenerator
 import matplotlib.pyplot as plt
 from pyecharts import options as opts
-plt.switch_backend('agg')
+#plt.switch_backend('TkAgg')
 
 class ACoolFishAnalysis:
     """无名之辈 --- 数据分析"""
@@ -84,15 +84,15 @@ class ACoolFishAnalysis:
 
         # 1 热点图
 
-        geo1 = Geo("《无名之辈》观众位置分布热点图", "数据来源：猫眼，Fly采集",page_title="#FFF", title_pos="center", width="100%", height=600, bg_color="#404A59")
+        geo1 = Geo("观众位置分布热点图", "数据来源：猫眼，Fly采集",page_title="#FFF", title_pos="center", width="100%", height=600, bg_color="#404A59")
 
         attr1, value1 = geo1.cast(data)
 
         geo1.add("", attr1, value1, type="heatmap", visual_range=[0, 1000], visual_text_color="#FFF", symbol_size=15, is_visualmap=True, is_piecewise=False, visual_split_number=10)
-        geo1.render("files/无名之辈-观众位置热点图.html")
+        geo1.render("files/观众位置热点图.html")
 
         # 2 位置图
-        geo2 = Geo("《无名之辈》观众位置分布", "数据来源：猫眼，Fly采集", title_color="#FFF", title_pos="center", width="100%", height=600,
+        geo2 = Geo("观众位置分布", "数据来源：猫眼，Fly采集", title_color="#FFF", title_pos="center", width="100%", height=600,
                    background_color="#404A59")
 
         attr2, value2 = geo1.cast(data)
@@ -121,7 +121,7 @@ class ACoolFishAnalysis:
         stopwords = STOPWORDS.copy()
         stopwords.add("电影")
         stopwords.add("一部")
-        stopwords.add("无名之辈")
+        #stopwords.add("好看")
         stopwords.add("一部")
         stopwords.add("一个")
         stopwords.add("有点")
@@ -131,7 +131,8 @@ class ACoolFishAnalysis:
         bg_image = plt.imread("files/2048.jpg")
 
         # 初始化 WordCloud
-        wc = WordCloud(width=1200, height=800, background_color='#FFF', mask=bg_image, font_path='C:/Windows/Fonts/STFANGSO.ttf', stopwords=stopwords, max_font_size=400, random_state=50)
+        #MAC: /System/Library/fonts/PingFang.ttc  windows:C:/Windows/Fonts/STFANGSO.ttf
+        wc = WordCloud(width=800, height=800, background_color='#FFF', mask=bg_image, font_path='/System/Library/fonts/PingFang.ttc', stopwords=stopwords, max_font_size=400, random_state=1)
         # 生成，显示图片
         wc.generate_from_text(words)
 
@@ -153,7 +154,7 @@ class ACoolFishAnalysis:
                 .add("", data)
                 .set_series_opts(label_opts=opts.LabelOpts(is_show=False))
                 .set_global_opts(visualmap_opts=opts.VisualMapOpts(),
-                                 title_opts=opts.TitleOpts(title="《少年的你》评星人位置分布图 by CSDN-虐猫人薛定谔i"))
+                                 title_opts=opts.TitleOpts(title="评星人位置分布图 "))
                 .render('files/位置分布图.html')
         )
         return c
@@ -164,7 +165,7 @@ class ACoolFishAnalysis:
             Pie()
                 #.add("", [list(z) for z in zip(star, values)])
                 .add("", data)
-                .set_global_opts(title_opts=opts.TitleOpts(title="《少年的你》评星"))
+                .set_global_opts(title_opts=opts.TitleOpts(title="评星"))
                 .set_series_opts(label_opts=opts.LabelOpts(formatter="{b}: {c}%"))
                 .render('files/饼状分布图.html')
         )
